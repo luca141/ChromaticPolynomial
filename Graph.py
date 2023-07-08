@@ -14,9 +14,14 @@ class Graph:
     def addEdge(self, start: str, end: str):  # add a new Edge to the Graph
         self.current_edges += 1
 
-    def  __matrix(self): #updates the Adjecency Matrix when a new Vertex is added
-        for i in range(0, len(self.edges)):
-            for j in range(0, len(self.edges)):
-
+    def __matrix(self):  #updates the Adjacency Matrix when a new Vertex is added
+        self.edges.append([])  #creates a new row in the matrix
+        for j in range(0, len(self.edges) - 1):  #fill the new row without the last element
+            self.edges[len(self.edges - 1)].append(0)
+        for i in range(0, len(self.edges)):  #create a new column. same vertex intersections are numbered "-1" everything else "0"
+            if i == len(self.edges - 1):
+                self.edges[i].append(-1)
+            else:
+                self.edges[i].append(0)
 
 
