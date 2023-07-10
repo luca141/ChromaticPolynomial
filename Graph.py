@@ -49,11 +49,17 @@ class Graph:
             else:
                 self.edges[i].append(0)
 
-    def _getIndex(self, name) -> int:
+    def _getIndex(self, name) -> int:  #returns the index of a Vertex in the vertex array, returns -1 if vertex doesnt exist
         for i in range(0, len(self.edges)):
             if self.vertices[i].getContent() == name:
                 return i
         return -1
+
+    def isComplete(self) -> bool:
+        if (self.current_vertices*(self.current_vertices -1))/2 == self.current_edges:
+            return True
+        else:
+            return False
 
 #matrix update test
 """x = Graph()
