@@ -9,7 +9,7 @@ class Graph:
         self.current_edges = 0
 
     def addVertex(self, name: str) -> bool:  # add a new Vertex to the Graph
-        if self._getIndex(name) == -1:
+        if self._getIndex(name) == -1:  #if vertex doesn't exist already
             self.vertices.append(Vertex(name))
             self.current_vertices += 1
             self.__matrix()
@@ -17,23 +17,35 @@ class Graph:
         else:
             return False
 
+    def removeVertex(self, name: str) -> bool:
+        if self._getIndex(name) == -1:  #if Vertex doesn't exist
+            return False
+        else:  #remove Vertex from array
+            self.vertices.pop(self._getIndex(name))
+            self.current_vertices -= 1
+            return False
+
     def addEdge(self, start: str, end: str) -> bool:  # add a new Edge to the Graph
         x = self._getIndex(start)
         y = self._getIndex(end)
-        if x == 0 or y == 0:
+        if x == -1 or y == -1: #if at least one vertex doesn't exist
             return False
-        elif self.edges[x][y] == 0:
+        elif self.edges[x][y] > 0:  #if edge exists
+            return False
+        elif self.edges[x][y] == 0:  #if edge doesn't exist
             self.edges[x][y] = 1
             self.edges[y][x] = 1
             self.current_edges += 1
             return True
 
-    def removeEdge(self, start: str, end: str) -> bool:
+    def removeEdge(self, start: str, end: str) -> bool:  #remove an existing edge from the graph
         x = self._getIndex(start)
         y = self._getIndex(end)
-        if self.edges[x][y] == 0:
+        if x == -1 or y == -1:  #if at least on vertex doesn't exist
             return False
-        elif x == 0 or y == 0:
+        elif self.edges[x][y] == 0:  #if edge doesn't exist
+            return False
+        elif self.edges[x][y] > 0:  #if edge exists
             self.edges[x][y] = 0
             self.edges[y][x] = 0
             self.current_edges -= 1
@@ -55,7 +67,7 @@ class Graph:
                 return i
         return -1
 
-    def isComplete(self) -> bool:
+    def isComplete(self) -> bool:  #checks if a graph is complete
         if (self.current_vertices*(self.current_vertices -1))/2 == self.current_edges:
             return True
         else:
