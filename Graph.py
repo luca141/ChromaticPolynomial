@@ -7,6 +7,7 @@ class Graph:
         self.vertices : list[Vertex] = []
         self.current_vertices = 0
         self.current_edges = 0
+        self.isolated_Vertices = 0
 
     def addVertex(self, name: str) -> bool:  # add a new Vertex to the Graph
         if self._getIndex(name) == -1:  #if vertex doesn't exist already
@@ -21,9 +22,9 @@ class Graph:
         if self._getIndex(name) == -1:  #if Vertex doesn't exist
             return False
         else:  #remove Vertex from array
-            self.vertices.pop(self._getIndex(name))
             self.current_vertices -= 1
             self.__matrixRemove(name)
+            self.vertices.pop(self._getIndex(name))
             return False
 
     def addEdge(self, start: str, end: str) -> bool:  # add a new Edge to the Graph
@@ -89,6 +90,14 @@ class Graph:
             return True
         else:
             return False
+
+    def countIsolatedVertices(self) -> int:  #does what the name says
+        self.isolated_Vertices = 0  #reset counter
+        for i in range(0, len(self.vertices)):
+            if self.vertices[i].getDegree() == 0:  #if vertex is not connected to any other Vertices
+                self.isolated_Vertices += 1
+        return self.isolated_Vertices
+
 
 
 #matrix update test
