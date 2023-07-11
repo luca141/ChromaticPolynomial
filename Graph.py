@@ -29,7 +29,9 @@ class Graph:
     def addEdge(self, start: str, end: str) -> bool:  # add a new Edge to the Graph
         x = self._getIndex(start)
         y = self._getIndex(end)
-        if x == -1 or y == -1: #if at least one vertex doesn't exist
+        if x == y:  #if start and end vertex are the same (to avoid loops)
+            return False
+        elif x == -1 or y == -1:  #if at least one vertex doesn't exist
             return False
         elif self.edges[x][y] > 0:  #if edge exists
             return False
@@ -66,9 +68,12 @@ class Graph:
             else:
                 self.edges[i].append(0)
 
-    #TODO: update edge counter
     def __matrixRemove(self, name) -> None:  #updates the Adjacency Matrix when a Vertex is removed
         x = self._getIndex(name)
+        for j in range(0, len(self.edges)):  #update edge counter and Vertex degrees
+            if self.edges[x][j] > 0:  #if the Vertex that will be removed is connected to other Vertices
+                self.current_edges -= 1
+                self.vertices[j].setDegree(self.vertices[j].getDegree() - 1)
         for i in range(0, len(self.edges)):  #remove column
             self.edges[i].pop(x)
         self.edges.pop(x)  #remove row
@@ -80,10 +85,11 @@ class Graph:
         return -1
 
     def isComplete(self) -> bool:  #checks if a graph is complete
-        if (self.current_vertices*(self.current_vertices -1))/2 == self.current_edges:  #if the formula for maximum edges in a Graph is equal to the current number of edges in the Graph
+        if (self.current_vertices*(self.current_vertices - 1))/2 == self.current_edges:  #if the formula for maximum edges in a Graph is equal to the current number of edges in the Graph
             return True
         else:
             return False
+
 
 #matrix update test
 """x = Graph()

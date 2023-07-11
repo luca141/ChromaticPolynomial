@@ -19,3 +19,6 @@ print(g.current_vertices)
 print(g.isComplete())
 for j in range(0, len(g.edges)):
         print(g.edges[j])
+g.removeVertex("b")
+for j in range(0, len(g.edges)):
+        print(g.edges[j])
