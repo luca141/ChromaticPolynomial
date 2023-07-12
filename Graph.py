@@ -91,14 +91,33 @@ class Graph:
         else:
             return False
 
-    def countIsolatedVertices(self) -> int:  #does what the name says
+    def countIsolatedVertices(self, remove_Isolated: bool) -> int:  #does what the name says
         self.isolated_Vertices = 0  #reset counter
         for i in range(0, len(self.vertices)):
             if self.vertices[i].getDegree() == 0:  #if vertex is not connected to any other Vertices
                 self.isolated_Vertices += 1
+                if remove_Isolated:
+                    self.vertices.pop(i)
         return self.isolated_Vertices
 
+    def merge(self, vertex1, vertex2):
+        if vertex1 == vertex2:
+            pass
+        else:
+            x = self._getIndex(vertex1)
+            y = self._getIndex(vertex2)
+            for i in range(0, len(self.edges)):  #transfer edges of vertex2 to vertex1
+                if self.edges[y][i] > 0:  #if vertex2 is connected to any other vertices
+                    self.addEdge(vertex1, self.vertices[i].getContent())
+            self.removeVertex(vertex2)
 
+    def getLowestDegreeVertex(self) -> int:  #returns the
+        degree = self.vertices[0].getDegree()
+        index = 0
+        for i in range(1, len(self.vertices)):
+            if self.vertices[i].getDegree() < degree:
+                index = i
+        return index
 
 #matrix update test
 """x = Graph()
