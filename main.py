@@ -1,4 +1,4 @@
-from sympy import sympify, expand
+"""from sympy import sympify, expand
 
 expression_str = "(x-0)*(x-1)*(x-2)"
 expression = sympify(expression_str)
@@ -9,7 +9,7 @@ expanded_expression_str = str(expanded_expression)
 print(expanded_expression_str)
 
 
-"""from Graph import Graph
+from Graph import Graph
 
 g = Graph()
 g.addVertex("a")

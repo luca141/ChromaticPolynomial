@@ -9,7 +9,8 @@ class Graph:
         self.current_edges = 0
         self.isolated_Vertices = 0
 
-    def addVertex(self, name: str) -> bool:  # add a new Vertex to the Graph
+    def addVertex(self, name: str) -> bool:
+        """add a new Vertex to the Graph"""
         if self._getIndex(name) == -1:  #if vertex doesn't exist already
             self.vertices.append(Vertex(name))
             self.current_vertices += 1
@@ -19,6 +20,7 @@ class Graph:
             return False
 
     def removeVertex(self, name: str) -> bool:
+        """removes existing vertex from Graph"""
         if self._getIndex(name) == -1:  #if Vertex doesn't exist
             return False
         else:  #remove Vertex from array
@@ -27,7 +29,8 @@ class Graph:
             self.vertices.pop(self._getIndex(name))
             return False
 
-    def addEdge(self, start: str, end: str) -> bool:  # add a new Edge to the Graph
+    def addEdge(self, start: str, end: str) -> bool:
+        """add a new Edge to the Graph"""
         x = self._getIndex(start)
         y = self._getIndex(end)
         if x == y:  #if start and end vertex are the same (to avoid loops)
@@ -44,7 +47,8 @@ class Graph:
             self.vertices[y].setDegree(self.vertices[y].getDegree() + 1)
             return True
 
-    def removeEdge(self, start: str, end: str) -> bool:  #remove an existing edge from the graph
+    def removeEdge(self, start: str, end: str) -> bool:
+        """remove an existing edge from the graph"""
         x = self._getIndex(start)
         y = self._getIndex(end)
         if x == -1 or y == -1:  #if at least on vertex doesn't exist
@@ -59,7 +63,8 @@ class Graph:
             self.vertices[y].setDegree(self.vertices[y].getDegree() - 1)
             return True
 
-    def __matrixAdd(self) -> None:  #updates the Adjacency Matrix when a new Vertex is added
+    def __matrixAdd(self) -> None:
+        """updates the Adjacency Matrix when a new Vertex is added"""
         self.edges.append([])  #creates a new row in the matrix
         for j in range(0, len(self.edges) - 1):  #fill the new row without the last element (which is added with the column)
             self.edges[len(self.edges) - 1].append(0)
@@ -69,7 +74,8 @@ class Graph:
             else:
                 self.edges[i].append(0)
 
-    def __matrixRemove(self, name) -> None:  #updates the Adjacency Matrix when a Vertex is removed
+    def __matrixRemove(self, name) -> None:
+        """updates the Adjacency Matrix when a Vertex is removed"""
         x = self._getIndex(name)
         for j in range(0, len(self.edges)):  #update edge counter and Vertex degrees
             if self.edges[x][j] > 0:  #if the Vertex that will be removed is connected to other Vertices
@@ -79,19 +85,22 @@ class Graph:
             self.edges[i].pop(x)
         self.edges.pop(x)  #remove row
 
-    def _getIndex(self, name) -> int:  #returns the index of a Vertex in the vertex array, returns -1 if vertex doesn't exist
+    def _getIndex(self, name) -> int:
+        """returns the index of a Vertex in the vertex array, returns -1 if vertex doesn't exist"""
         for i in range(0, len(self.edges)):
             if self.vertices[i].getContent() == name:
                 return i
         return -1
 
-    def isComplete(self) -> bool:  #checks if a graph is complete
+    def isComplete(self) -> bool:
+        """checks if a graph is complete"""
         if (self.current_vertices*(self.current_vertices - 1))/2 == self.current_edges:  #if the formula for maximum edges in a Graph is equal to the current number of edges in the Graph
             return True
         else:
             return False
 
-    def countIsolatedVertices(self, remove_Isolated: bool) -> int:  #does what the name says
+    def countIsolatedVertices(self, remove_Isolated: bool) -> int:
+        """does what the name says"""
         self.isolated_Vertices = 0  #reset counter
         for i in range(0, len(self.vertices)):
             if self.vertices[i].getDegree() == 0:  #if vertex is not connected to any other Vertices
@@ -100,7 +109,8 @@ class Graph:
                     self.vertices.pop(i)
         return self.isolated_Vertices
 
-    def merge(self, vertex1, vertex2):
+    def merge(self, vertex1: str, vertex2: str) -> None:
+        """merges two vertices"""
         if vertex1 == vertex2:
             pass
         else:
@@ -111,11 +121,13 @@ class Graph:
                     self.addEdge(vertex1, self.vertices[i].getContent())
             self.removeVertex(vertex2)
 
-    def getLowestDegreeVertex(self) -> int:  #returns the
-        degree = self.vertices[0].getDegree()
+    def getLowestDegreeVertex(self) -> int:
+        """returns the array index of the Vertex with the lowest degree, if multiple vertices have the same degree it returns the first of those"""
+        a = self.vertices[0].getDegree()
         index = 0
-        for i in range(1, len(self.vertices)):
-            if self.vertices[i].getDegree() < degree:
+        for i in range(0, len(self.vertices)):
+            if self.vertices.getDegree() < a:
+                a = i.getDegree()
                 index = i
         return index
 
