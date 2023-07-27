@@ -100,14 +100,15 @@ class Graph:
             return False
 
     def countIsolatedVertices(self, remove_Isolated: bool) -> int:
-        """does what the name says"""
+        """counts isolated vertices, takes a boolean parameter to decide if isolated vertices are deleted from the graph or not"""
         self.isolated_Vertices = 0  #reset counter
         for i in range(0, len(self.vertices)):
             if self.vertices[i].getDegree() == 0:  #if vertex is not connected to any other Vertices
                 self.isolated_Vertices += 1
                 if remove_Isolated:
-                    self.vertices.pop(i)
+                    self.removeVertex(self.vertices[i].getContent())
         return self.isolated_Vertices
+
 
     def merge(self, vertex1: str, vertex2: str) -> None:
         """merges two vertices"""
@@ -126,10 +127,11 @@ class Graph:
         a = self.vertices[0].getDegree()
         index = 0
         for i in range(0, len(self.vertices)):
-            if self.vertices.getDegree() < a:
-                a = i.getDegree()
+            if self.vertices[i].getDegree() < a:
+                a = self.vertices[i].getDegree()
                 index = i
         return index
+
 
 #matrix update test
 """x = Graph()
