@@ -28,6 +28,6 @@ graph.addEdge("C", "B")"""
 #TODO: look into why the wrong Polynomial gets returned
 
 polynomial = ChromaticPolynomial(graph)
-polynomial.calculatePolynomial()
-print(polynomial.getPolynomial())
+print(polynomial.simplify(polynomial.calculatePolynomial()))
+
 

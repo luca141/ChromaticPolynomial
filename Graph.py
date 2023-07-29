@@ -1,4 +1,5 @@
 from Vertex import Vertex
+import copy
 class Graph:
 
     def __init__(self):
@@ -101,13 +102,13 @@ class Graph:
 
     def countIsolatedVertices(self, remove_Isolated: bool) -> int:
         """counts isolated vertices, takes a boolean parameter to decide if isolated vertices are deleted from the graph or not"""
-        self.isolated_Vertices = 0  #reset counter
-        for i in range(0, len(self.vertices)):
-            if self.vertices[i].getDegree() == 0:  #if vertex is not connected to any other Vertices
-                self.isolated_Vertices += 1
+        isolated_vertices = 0  # reset counter
+        for vertex in self.vertices.copy():  # Iterate over a copy of the list
+            if vertex.getDegree() == 0:  # if vertex is not connected to any other Vertices
+                isolated_vertices += 1
                 if remove_Isolated:
-                    self.removeVertex(self.vertices[i].getContent())
-        return self.isolated_Vertices
+                    self.removeVertex(vertex.getContent())
+        return isolated_vertices
 
 
     def merge(self, vertex1: str, vertex2: str) -> None:
