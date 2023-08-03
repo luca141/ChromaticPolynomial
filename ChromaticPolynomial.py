@@ -14,12 +14,12 @@ class ChromaticPolynomial:
         print("calculating")
         isolated = self.graph.countIsolatedVertices(True)
 
-        if len(self.graph.vertices) == 0:
+        if len(self.graph.vertices) == 0 and isolated == 0:
             self.polynomial = "0"
             return self.polynomial
 
-        elif len(self.graph.vertices) == 0:
-            self.polynomial = "x"
+        elif len(self.graph.vertices) == 0 and isolated > 0:
+            self.polynomial = "x**{}".format(str(isolated))
             return self.polynomial
 
         elif self.graph.isComplete():
