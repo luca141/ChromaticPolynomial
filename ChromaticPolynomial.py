@@ -51,5 +51,6 @@ class ChromaticPolynomial:
             self.polynomial = "(" + polynomial_removed.getPolynomial() + "-" + polynomial_merged.getPolynomial() + ")" + "*x**{}".format(str(isolated))
             return self.polynomial
 
-    def simplify(self, term):  #uses the sympy library to simplify a mathematical term
+    def simplify(self, term: str, variable: str):  #uses the sympy library to simplify a mathematical term
+        term = term.replace("x", variable)
         return str(expand(sympify(term)))
