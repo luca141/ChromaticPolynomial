@@ -42,10 +42,11 @@ class GUI:
     def buttonAdd(self):
         vertex = self.canvas.create_oval(self.x - self.radius, self.y - self.radius, self.x + self.radius,
                                          self.y + self.radius, fill="lightgreen", width=1)
-        self.graph.addVertex(str(self.graph.current_vertices))
         self.canvas.tag_bind(vertex, "<B1-Motion>", lambda event: self.moveCircle(event, vertex))
         self.canvas.tag_bind(vertex, "<Button-3>", lambda event: self.highlightCircle(vertex))
         self.vertices_graphic.append(vertex)
+        self.graph.addVertex(str(self.vertices_graphic[len(self.vertices_graphic) - 1]))
+
 
     def moveCircle(self, event, circle):
         x, y = event.x, event.y
