@@ -2,6 +2,7 @@ import tkinter as tk
 from Graph import Graph
 from ChromaticPolynomial import ChromaticPolynomial
 import copy
+import time
 
 
 class GUI:
@@ -36,12 +37,14 @@ class GUI:
         self.entry.insert(string="x", index=1)
         self.entry.grid(row=1, column=2, padx=10, pady=10, columnspan=2)
 
-        self.canvas = tk.Canvas(root, width=root.winfo_screenwidth() - 40, heigh=root.winfo_screenheight() - 150,
-                                bg="white")
+        self.canvas = tk.Canvas(root, width=root.winfo_screenwidth() - 40, heigh=root.winfo_screenheight() - 150, bg="white")
         self.canvas.place(x=20, y=50)
 
         self.text_widget = tk.Text(root, wrap=tk.WORD, height=1)
         self.text_widget.grid(row=1, column=6, padx=10, pady=10)
+
+        self.time_widget = tk.Text(root, wrap=tk.WORD, height=1, width=10)
+        self.time_widget.grid(row=1, column=10, padx=10, pady=10)
 
     def buttonAdd(self):
         vertex = self.canvas.create_oval(self.x - self.radius, self.y - self.radius, self.x + self.radius,
@@ -88,10 +91,14 @@ class GUI:
 
     def buttonCalculate(self):
         graph_copy = copy.deepcopy(self.graph)
+        time1 = time.time() * 1000
         polynomial = ChromaticPolynomial(graph_copy)
         polynomial = polynomial.simplify(polynomial.calculatePolynomial(), str(self.entry.get()))
+        time2 = (time.time() * 1000) - time1
         self.text_widget.delete("1.0", tk.END)  # Clear existing content
+        self.time_widget.delete("1.0", tk.END)  # Clear existing content
         self.text_widget.insert("1.0", polynomial)
+        self.time_widget.insert("1.0", str(round(time2/1000, 3)) + "s")
 
     def buttonReset(self):
         for i in range(len(self.graph.vertices)):
@@ -101,7 +108,6 @@ class GUI:
             self.vertices_graphic.pop(0)
         self.updateEdges()
         self.text_widget.delete("1.0", tk.END)
-
 
     def updateEdges(self):
         for l in self.edges_graphic:
