@@ -1,6 +1,7 @@
 import tkinter as tk
 from Graph import Graph
 from ChromaticPolynomial import ChromaticPolynomial
+import copy
 
 
 class GUI:
@@ -38,6 +39,9 @@ class GUI:
         self.canvas = tk.Canvas(root, width=root.winfo_screenwidth() - 40, heigh=root.winfo_screenheight() - 150,
                                 bg="white")
         self.canvas.place(x=20, y=50)
+
+        self.text_widget = tk.Text(root, wrap=tk.WORD, height=1)
+        self.text_widget.grid(row=1, column=6, padx=10, pady=10)
 
     def buttonAdd(self):
         vertex = self.canvas.create_oval(self.x - self.radius, self.y - self.radius, self.x + self.radius,
@@ -83,12 +87,21 @@ class GUI:
             self.highlighted_circle = None
 
     def buttonCalculate(self):
-        polynomial = ChromaticPolynomial(self.graph)
+        graph_copy = copy.deepcopy(self.graph)
+        polynomial = ChromaticPolynomial(graph_copy)
         polynomial = polynomial.simplify(polynomial.calculatePolynomial(), str(self.entry.get()))
-        print(polynomial)
+        self.text_widget.delete("1.0", tk.END)  # Clear existing content
+        self.text_widget.insert("1.0", polynomial)
 
     def buttonReset(self):
-        pass
+        for i in range(len(self.graph.vertices)):
+            self.canvas.delete(self.vertices_graphic[i])
+        for j in range(len(self.graph.vertices)):
+            self.graph.removeVertex(self.graph.vertices[0].getContent())
+            self.vertices_graphic.pop(0)
+        self.updateEdges()
+        self.text_widget.delete("1.0", tk.END)
+
 
     def updateEdges(self):
         for l in self.edges_graphic:

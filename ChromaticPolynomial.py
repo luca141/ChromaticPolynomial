@@ -11,7 +11,6 @@ class ChromaticPolynomial:
         return self.polynomial
 
     def calculatePolynomial(self) -> str:
-        print("calculating")
         isolated = self.graph.countIsolatedVertices(True)
 
         if len(self.graph.vertices) == 0 and isolated == 0:
@@ -23,7 +22,6 @@ class ChromaticPolynomial:
             return self.polynomial
 
         elif self.graph.isComplete():
-            print("complete")
             self.polynomial = "1"
             for i in range(0, len(self.graph.vertices)):
                 self.polynomial += "*(x-{})".format(str(i))
