@@ -133,6 +133,7 @@ class Graph:
                 index = i
         return index
 
+#TODO: getHighestDegree getHighest/LowestAdjecent
 
 #matrix update test
 """x = Graph()

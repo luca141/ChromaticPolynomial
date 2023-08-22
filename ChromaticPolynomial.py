@@ -39,14 +39,18 @@ class ChromaticPolynomial:
             graph_removed = copy.deepcopy(self.graph)
             graph_removed.removeEdge(lowest_degree_vertex, nearest_vertex)
             polynomial_removed = ChromaticPolynomial(graph_removed)
-            polynomial_removed.calculatePolynomial()
+            del graph_removed
+            polynomial_removed_string = polynomial_removed.calculatePolynomial()
+            del polynomial_removed
 
             graph_merged = copy.deepcopy(self.graph)
             graph_merged.merge(lowest_degree_vertex, nearest_vertex)
             polynomial_merged = ChromaticPolynomial(graph_merged)
-            polynomial_merged.calculatePolynomial()
+            del graph_merged
+            polynomial_merged_string = polynomial_merged.calculatePolynomial()
+            del polynomial_merged
 
-            self.polynomial = "(" + polynomial_removed.getPolynomial() + "-" + polynomial_merged.getPolynomial() + ")" + "*x**{}".format(str(isolated))
+            self.polynomial = "(" + polynomial_removed_string + "-" + polynomial_merged_string + ")" + "*x**{}".format(str(isolated))
             return self.polynomial
 
     def simplify(self, term: str, variable: str):  #uses the sympy library to simplify a mathematical term
