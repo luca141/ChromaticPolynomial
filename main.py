@@ -1,26 +1,5 @@
-from Graph import Graph
-from ChromaticPolynomial import ChromaticPolynomial
+import tkinter as tk
+root = tk.Tk()
+app = GUI(root)
 
-g = Graph()
-g.addVertex("A")
-g.addVertex("B")
-g.addVertex("C")
-g.addVertex("D")
-g.addVertex("E")
-g.addVertex("F")
-g.addVertex("G")
-g.addVertex("H")
-g.addVertex("I")
-g.addVertex("J")
-g.addEdge("A", "B")
-g.addEdge("B", "C")
-g.addEdge("C", "D")
-g.addEdge("D", "E")
-g.addEdge("E", "A")
-g.addEdge("A", "F")
-g.addEdge("B", "G")
-g.addEdge("C", "H")
-g.addEdge("D", "I")
-
-polynomial = ChromaticPolynomial(g)
-print(polynomial.simplify(polynomial.calculatePolynomial()))
+root.mainloop()
