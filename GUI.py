@@ -121,7 +121,9 @@ class GUI:
                     x1, y1 = self.get_center(self.vertices_graphic[i])
                     x2, y2 = self.get_center(self.vertices_graphic[j])
                     line = self.canvas.create_line(x1, y1, x2, y2, fill="black")
+                    self.canvas.tag_lower(line)
                     self.edges_graphic.append(line)
+
 
     def get_center(self, circle):
         x1, y1, x2, y2 = self.canvas.coords(circle)
