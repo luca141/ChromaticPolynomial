@@ -1,5 +1,5 @@
 # ChormaticPolynomial
-Software for the calculation of the Chromatic Polynomial of a graph
+Software for the calculation of the Chromatic Polynomial of a graph.
 Download either the entire repository and run the main.py file or just download the .exe
 
  How to use:
