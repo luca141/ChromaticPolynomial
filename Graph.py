@@ -133,12 +133,25 @@ class Graph:
                 index = i
         return index
 
-#TODO: getHighestDegree getHighest/LowestAdjecent
+    def getHighestDegreeVertex(self) -> int:
+        """returns the array index of the Vertex with the lowest degree, if multiple vertices have the same degree it returns the first of those"""
+        a = self.vertices[0].getDegree()
+        index = 0
+        for i in range(0, len(self.vertices)):
+            if self.vertices[i].getDegree() > a:
+                a = self.vertices[i].getDegree()
+                index = i
+        return index
 
-#matrix update test
-"""x = Graph()
-for i in range(0, 9):
-    x.addVertex(str(i))
-    print(x.vertices)
-    for j in range(0, len(x.edges)):
-        print(x.edges[j])"""
+    def getHighestDegreeAdjacent(self, vertex: str) -> int:
+        index = self._getIndex(vertex)
+        degree = 0
+        index_adjacent = None
+        for i in range(0, len(self.edges)):
+            if self.edges[index][i] == 1 and self.edges[index][i] > degree:
+                index_adjacent = i
+                degree = self.vertices[i].getDegree()
+        return index_adjacent
+
+
+#TODO: getHighestDegree getHighest/LowestAdjecent

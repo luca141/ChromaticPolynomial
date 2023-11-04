@@ -35,24 +35,28 @@ class ChromaticPolynomial:
                 if self.graph.edges[self.graph._getIndex(lowest_degree_vertex)][i] > 0:
                     nearest_vertex = self.graph.vertices[i].getContent()
                     break
+            if self.graph.vertices[self.graph.getLowestDegreeVertex()].getDegree() == 1:
+                graph_merged = copy.deepcopy(self.graph)
+                graph_merged.merge(lowest_degree_vertex, nearest_vertex)
+                polynomial_merged = ChromaticPolynomial(graph_merged)
+                polynomial_merged_string = polynomial_merged.calculatePolynomial()
 
-            graph_removed = copy.deepcopy(self.graph) #copy graph
-            graph_removed.removeEdge(lowest_degree_vertex, nearest_vertex) #remove edge between the two vertices chosen above
-            polynomial_removed = ChromaticPolynomial(graph_removed)
-            del graph_removed
-            polynomial_removed_string = polynomial_removed.calculatePolynomial() #calculate polynomial of graph without edge
-            del polynomial_removed
+                self.polynomial = "(" + "(" + polynomial_merged_string + ")" + "*x" + "-" + polynomial_merged_string + ")" + "*x**{}".format(str(isolated))
+                return self.polynomial
+            else:
+                graph_removed = copy.deepcopy(self.graph)
+                graph_removed.removeEdge(lowest_degree_vertex, nearest_vertex)
+                polynomial_removed = ChromaticPolynomial(graph_removed)
+                polynomial_removed_string = polynomial_removed.calculatePolynomial()
 
-            #same as the block above but merges the vertices instead of removing the edge
-            graph_merged = copy.deepcopy(self.graph)
-            graph_merged.merge(lowest_degree_vertex, nearest_vertex)
-            polynomial_merged = ChromaticPolynomial(graph_merged)
-            del graph_merged
-            polynomial_merged_string = polynomial_merged.calculatePolynomial()
-            del polynomial_merged
+                graph_merged = copy.deepcopy(self.graph)
+                graph_merged.merge(lowest_degree_vertex, nearest_vertex)
+                polynomial_merged = ChromaticPolynomial(graph_merged)
+                polynomial_merged_string = polynomial_merged.calculatePolynomial()
 
-            self.polynomial = "(" + polynomial_removed_string + "-" + polynomial_merged_string + ")" + "*x**{}".format(str(isolated))
-            return self.polynomial
+                self.polynomial = "(" + polynomial_removed_string + "-" + polynomial_merged_string + ")" + "*x**{}".format(str(isolated))
+                return self.polynomial
+
 
     def simplify(self, term: str, variable: str):  #uses the sympy library to simplify a mathematical term
         term = term.replace("x", variable)

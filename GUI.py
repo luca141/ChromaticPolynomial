@@ -3,6 +3,7 @@ from Graph import Graph
 from ChromaticPolynomial import ChromaticPolynomial
 import copy
 import time
+import sys
 
 
 class GUI:
@@ -45,6 +46,8 @@ class GUI:
 
         self.time_widget = tk.Text(root, wrap=tk.WORD, height=1, width=10)
         self.time_widget.grid(row=1, column=10, padx=10, pady=10)
+
+        sys.setrecursionlimit(10000)
 
     def buttonAdd(self):
         vertex = self.canvas.create_oval(self.x - self.radius, self.y - self.radius, self.x + self.radius,
