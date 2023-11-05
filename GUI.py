@@ -4,24 +4,27 @@ from ChromaticPolynomial import ChromaticPolynomial
 import copy
 import time
 import sys
+from random import randint
 
 
 class GUI:
     def __init__(self, root):
         self.radius = 15
-        self.x = 100
-        self.y = 100
+        self.x = randint(50, 200)
+        self.y = randint(50, 200)
         self.vertices_graphic = []
         self.edges_graphic = []
         self.highlighted_circle = None
 
         self.root = root
+        #window settings
         root.geometry(str(root.winfo_screenwidth()) + "x" + str(root.winfo_screenheight()))  #set window to screen size
         root.title("Chromatic Polynomial Calculator")
         root.configure(bg="grey")
 
         self.graph = Graph()
 
+        #add graphic elements
         self.button_add = tk.Button(root, text="Add Vertex", command=self.buttonAdd)
         self.button_add.grid(row=1, column=0, padx=10, pady=10)
 
@@ -47,9 +50,11 @@ class GUI:
         self.time_widget = tk.Text(root, wrap=tk.WORD, height=1, width=10)
         self.time_widget.grid(row=1, column=10, padx=10, pady=10)
 
-        sys.setrecursionlimit(10000)
+        sys.setrecursionlimit(20000)
 
     def buttonAdd(self):
+        self.x = randint(50, 200)
+        self.y = randint(50, 200)
         vertex = self.canvas.create_oval(self.x - self.radius, self.y - self.radius, self.x + self.radius,
                                          self.y + self.radius, fill="lightgreen", width=1)
         self.canvas.tag_bind(vertex, "<B1-Motion>", lambda event: self.moveCircle(event, vertex))
@@ -91,6 +96,7 @@ class GUI:
             self.vertices_graphic.remove(self.highlighted_circle)
             self.canvas.delete(self.highlighted_circle)
             self.highlighted_circle = None
+            self.updateEdges()
 
     def buttonCalculate(self):
         graph_copy = copy.deepcopy(self.graph)

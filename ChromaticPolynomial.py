@@ -44,15 +44,15 @@ class ChromaticPolynomial:
                 self.polynomial = "(" + "(" + polynomial_merged_string + ")" + "*x" + "-" + polynomial_merged_string + ")" + "*x**{}".format(str(isolated))
                 return self.polynomial
             else:
-                graph_removed = copy.deepcopy(self.graph)
-                graph_removed.removeEdge(lowest_degree_vertex, nearest_vertex)
+                graph_removed = copy.deepcopy(self.graph) #create a copy of the graph
+                graph_removed.removeEdge(lowest_degree_vertex, nearest_vertex) #remove an edge from the copy
                 polynomial_removed = ChromaticPolynomial(graph_removed)
-                polynomial_removed_string = polynomial_removed.calculatePolynomial()
+                polynomial_removed_string = polynomial_removed.calculatePolynomial() #calculate polynomial of graph with removed edge
 
-                graph_merged = copy.deepcopy(self.graph)
-                graph_merged.merge(lowest_degree_vertex, nearest_vertex)
+                graph_merged = copy.deepcopy(self.graph) #create another copy
+                graph_merged.merge(lowest_degree_vertex, nearest_vertex) #merge two vertices
                 polynomial_merged = ChromaticPolynomial(graph_merged)
-                polynomial_merged_string = polynomial_merged.calculatePolynomial()
+                polynomial_merged_string = polynomial_merged.calculatePolynomial() #calculate the polynomial of graph with merged vertices
 
                 self.polynomial = "(" + polynomial_removed_string + "-" + polynomial_merged_string + ")" + "*x**{}".format(str(isolated))
                 return self.polynomial
